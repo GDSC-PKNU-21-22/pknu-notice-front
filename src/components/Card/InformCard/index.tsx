@@ -1,13 +1,10 @@
 import Icon from '@components/Icon';
-import MajorModal from '@components/Modal/MajorModal';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import useMajor from '@hooks/useMajor';
 import useRoter from '@hooks/useRouter';
 import { THEME } from '@styles/ThemeProvider/theme';
 import { IconKind } from '@type/styles/icon';
 import { setSize } from '@utils/styles/size';
-import { useState } from 'react';
 
 interface InformCardProps {
   icon: IconKind & ('school' | 'notification');
@@ -16,26 +13,13 @@ interface InformCardProps {
 }
 
 const InformCard = ({ icon, title, path }: InformCardProps) => {
-  const { major } = useMajor();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { routerTo } = useRoter();
-
   const onClick = () => {
-    if (!major) {
-      setIsModalOpen((prev) => !prev);
-      return;
-    }
     routerTo(path);
   };
 
   return (
     <>
-      {isModalOpen && (
-        <MajorModal
-          onClose={() => setIsModalOpen((prev) => !prev)}
-          routerTo={() => routerTo('major-decision')}
-        />
-      )}
       <Card data-testid="card" icon={icon} onClick={onClick}>
         <Icon
           kind={icon}
