@@ -10,11 +10,12 @@ interface ModalProps {
 const Modal = ({ children, onClose }: ModalProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  const onClick = (e: React.MouseEvent<HTMLElement>) => {
-    if (e.target === e.currentTarget) {
-      setIsOpen((prev) => !prev);
-      setTimeout(onClose, 200);
+  const onClick: React.MouseEventHandler<HTMLElement> = (e) => {
+    if (e.target !== e.currentTarget) {
+      return;
     }
+    setIsOpen((prev) => !prev);
+    setTimeout(onClose, 200);
   };
 
   return (
